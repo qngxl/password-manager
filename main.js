@@ -1,12 +1,24 @@
 
-function addPasswordButtonOnClick() {
-    if(!document.querySelector(".container.create-password")) {
-    const createPasswordContainer = document.createElement("div");
-    createPasswordContainer.classList.add("container", "create-password");
-    createPasswordContainer.textContent = "created new passord"
-    document.body.appendChild(createPasswordContainer);
+function createNewPasswordContainerOnClick() {
+    if(!document.querySelector(".container.new-password")) {
+
+    const newPasswordContainer = document.createElement("div");
+
+    newPasswordContainer.classList.add("container", "new-password");
+    newPasswordContainer.textContent = "created new passord";
+
+    const saveButton = document.createElement("button");
+
+    saveButton.classList.add("rectangular-button");
+    saveButton
+    saveButton.textContent = "Save";
+    saveButton.addEventListener("click", () => {
+        newPasswordContainer.remove();
+    });
+
+    newPasswordContainer.appendChild(saveButton);
+    document.body.appendChild(newPasswordContainer);
     }
 }
 
-document.getElementById("add-password-button").addEventListener("click", addPasswordButtonOnClick);
-
+document.getElementById("add-password-button").addEventListener("click", createNewPasswordContainerOnClick);
