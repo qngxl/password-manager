@@ -16,15 +16,12 @@ button {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    
-    
 }
 
 .add-password-button {
     padding: 40px;
     font-size: 30px;
     border-radius: 50%;
-
     position: fixed;
     bottom: 30px;
     right: 30px;
@@ -37,10 +34,28 @@ button {
     transition: transform 0.1s ease; 
 }
 
-
 .rectangular-button {
     padding: 10px;
     border-radius: 6px;
+}
+
+.container {
+    background-color: var(--secondary-color);
+    color: var(--white-text-color);
+    border: 3px solid var(--white-text-color);
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-password {
+    width: 800px;
+    height: 600px;  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 body {
