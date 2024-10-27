@@ -1,0 +1,48 @@
+:root {
+    --primary-color: #5A4E77;
+    --secondary-color: #3B4A67;
+    --tertiary-color: #2F3A51;
+    --first-grey: #434A54;
+    --second-grey: #676E7A;
+    --third-grey: #A1A5AD;
+    --white-text-color: #E8E9EB;
+}
+
+button {
+    background-color: var(--secondary-color);
+    color: var(--white-text-color);
+    border: 3px solid var(--third-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    
+    
+}
+
+.add-password-button {
+    padding: 40px;
+    font-size: 30px;
+    border-radius: 50%;
+
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.add-password-button:active {
+    transform: scale(0.9); 
+    background-color: var(--tertiary-color); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.1s ease; 
+}
+
+
+.rectangular-button {
+    padding: 10px;
+    border-radius: 6px;
+}
+
+body {
+    background-color: var(--primary-color);
+}
