@@ -79,6 +79,9 @@ input:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    flex-direction: column;
+    gap: 30px;
 }
 
 .input-container-wrapper {
