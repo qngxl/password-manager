@@ -26,6 +26,16 @@ function createNewPasswordContainerOnClick() {
     newPasswordContainer.appendChild(inputContainerWrapper);
     });
 
+    const closeButton = document.createElement("button");
+    closeButton.classList.add("close-button");
+    closeButton.textContent = "x";
+    closeButton.addEventListener("click", () => {
+        newPasswordContainer.remove();
+    });
+
+    newPasswordContainer.appendChild(closeButton);
+
+
     const saveButton = document.createElement("button");
     saveButton.classList.add("rectangular-button");
     saveButton.textContent = "Save";
