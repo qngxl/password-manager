@@ -24,6 +24,24 @@ button:active {
     transition: transform 0.1s ease; 
 }
 
+input {
+    background-color: var(--secondary-color);
+    color: var(--white-text-color);
+    border: 0px;
+    border-radius: 10px;
+    font-size: 14px;
+
+}
+
+input:focus,
+input:hover {
+    border: 1px solid var(--third-grey);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.3s ease;
+
+}
+
 .add-password-button {
     padding: 40px;
     font-size: 30px;
@@ -35,13 +53,13 @@ button:active {
 }
 
 .rectangular-button {
-    width: 100px;
-    height: 42px;
+    width: 300px;
+    height: 50px;
     border: 2px solid var(--third-grey);
-    border-radius: 6px;
+    border-radius: 10px;
+    font-size: 18px;
     position:absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 30px;
 }
 
 .container {
@@ -54,13 +72,31 @@ button:active {
     align-items: center;
 }
 
-.new-password {
-    width: 800px;
-    height: 600px;  
+.new-password-container {
+    width: 350px;
+    height: 550px;  
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.input-container-wrapper {
+    width: 300px;
+    height: 70px;
+    background-color: transparent;
+}
+
+.input-headline {
+    width: 300px;
+    height: 22px;
+    color: var(--white-text-color);
+    font-size: 18px;
+}
+
+.input-wrapper {
+    width: 300px;
+    height: 45px;
 }
 
 body {
