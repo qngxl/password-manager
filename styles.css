@@ -24,6 +24,20 @@ button:active {
     transition: transform 0.1s ease; 
 }
 
+#toggle-button {
+    background-color: var(--secondary-color);
+    color: var(--white-text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: backround-color 0.3 ease;
+}
+
+#toggle-button.active,
+#toggle-button.hover {
+    background-color: var(--tertiary-color);
+}
+
 input {
     background-color: var(--secondary-color);
     color: var(--white-text-color);
@@ -74,6 +88,29 @@ input:hover {
     position:absolute;
     top: 2px;
     right: 2px;
+}
+
+.toggle-username-container-button {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 100px;
+}
+
+.toggle-email-container-button {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 150px;
+}
+
+.toggle-show-password-button {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
 }
 
 .container {
