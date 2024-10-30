@@ -1,3 +1,30 @@
+function createInputContainerWrapper(placeholderText, headlineText, iconClass) {
+
+    const inputContainerWrapper = document.createElement("div");
+    inputContainerWrapper.classList.add("input-container-wrapper");
+
+    const inputWrapper = document.createElement("div");
+    inputWrapper.classList.add("input-wrapper");
+
+    const inputHeadline = document.createElement("h1");
+    inputHeadline.classList.add("input-headline");
+    inputHeadline.textContent = headlineText;
+
+    const input = document.createElement("input");
+    input.classList.add("input-wrapper");
+    input.placeholder = placeholderText;
+
+    const icon = document.createElement("i");
+    icon.classList.add("fas", iconClass);
+
+    inputContainerWrapper.appendChild(inputHeadline);
+    inputContainerWrapper.appendChild(inputWrapper);
+    
+    inputWrapper.appendChild(input);
+    inputWrapper.appendChild(icon);
+
+    return inputContainerWrapper;
+}   
 
 function createNewPasswordContainerOnClick() {
 
@@ -5,26 +32,6 @@ function createNewPasswordContainerOnClick() {
 
     const newPasswordContainer = document.createElement("div");
     newPasswordContainer.classList.add("container", "new-password-container");
-
-    const inputLabels = ["Username", "Email", "Password"];
-
-    inputLabels.forEach(label => {   
-
-    const inputContainerWrapper = document.createElement("div");
-    inputContainerWrapper.classList.add("input-container-wrapper");
-
-    const inputHeadline = document.createElement("h1");
-    inputHeadline.classList.add("input-headline");
-    inputHeadline.textContent = label;  
-
-    const inputWrapper = document.createElement("input");
-    inputWrapper.classList.add("input-wrapper");
-
-    inputContainerWrapper.appendChild(inputHeadline);
-    inputContainerWrapper.appendChild(inputWrapper);
-
-    newPasswordContainer.appendChild(inputContainerWrapper);
-    });
 
     const closeButton = document.createElement("button");
     closeButton.classList.add("close-button");
@@ -35,6 +42,13 @@ function createNewPasswordContainerOnClick() {
 
     newPasswordContainer.appendChild(closeButton);
 
+    const UsernameContainer = createInputContainerWrapper("Username", "Username", "fa-user");
+    const EmailContainer = createInputContainerWrapper("Email", "Email", "fa-envelope");
+    const PasswordContainer = createInputContainerWrapper("Password", "Password", "fa-key");
+
+    newPasswordContainer.appendChild(UsernameContainer);
+    newPasswordContainer.appendChild(EmailContainer);
+    newPasswordContainer.appendChild(PasswordContainer);
 
     const saveButton = document.createElement("button");
     saveButton.classList.add("rectangular-button");
@@ -50,3 +64,5 @@ function createNewPasswordContainerOnClick() {
 }
 
 document.getElementById("add-password-button").addEventListener("click", createNewPasswordContainerOnClick);
+
+
