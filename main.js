@@ -20,16 +20,16 @@ function createNewPasswordContainerOnClick() {
 
     newPasswordContainer.appendChild(closeButton);
 
-    UsernameContainer = createInputContainerWrapper("Username", "Username", "fa-user");
-    EmailContainer = createInputContainerWrapper("Email", "Email", "fa-envelope");
-    PasswordContainer = createInputContainerWrapper("Password", "Password", "fa-key", "password");
+    UsernameContainer = createInputContainerWrapper("Username", "Username", "fa-user", "", "username-input-id");
+    EmailContainer = createInputContainerWrapper("Email", "Email", "fa-envelope", "", "email-input-id");
+    PasswordContainer = createInputContainerWrapper("Password", "Password", "fa-key", "password", "password-input-id");
 
     newPasswordContainer.appendChild(UsernameContainer);
     newPasswordContainer.appendChild(EmailContainer);
     newPasswordContainer.appendChild(PasswordContainer);
 
     const saveButton = document.createElement("button");
-    saveButton.classList.add("rectangular-button");
+    saveButton.classList.add("save-button");
     saveButton.textContent = "Save";        
     saveButton.addEventListener("click", () => {
         newPasswordContainer.remove();
@@ -39,17 +39,17 @@ function createNewPasswordContainerOnClick() {
 
     document.body.appendChild(newPasswordContainer);
 
-    const toggleUsernameContainerButton = passButtonProperties("toggle-username-container-button", "toggle-username-container-button", "a");
+    const toggleUsernameContainerButton = createToggleButton("toggle-username-container-button", "toggle-username-container-button", "toggle Username Container: ON", );
     newPasswordContainer.appendChild(toggleUsernameContainerButton);
 
     toggleUsernameContainerButton.addEventListener("click", handleToggle);
 
-    const toggleEmailContainerButton = passButtonProperties("toggle-email-container-button", "toggle-email-container-button", "b");
+    const toggleEmailContainerButton = createToggleButton("toggle-email-container-button", "toggle-email-container-button", "toggle Email Container: ON", );
     newPasswordContainer.appendChild(toggleEmailContainerButton);
 
     toggleEmailContainerButton.addEventListener("click", handleToggle);
 
-    const toggleShowPasswordButton = passButtonProperties("toggle-show-password-button", "toggle-show-password-button", "c");
+    const toggleShowPasswordButton = createToggleButton("toggle-show-password-button", "toggle-show-password-button", "", "fa-eye-slash");
     inputWrapper.appendChild(toggleShowPasswordButton);
 
     toggleShowPasswordButton.addEventListener("click", handleToggle);
@@ -57,7 +57,7 @@ function createNewPasswordContainerOnClick() {
 
 }
 
-function createInputContainerWrapper(placeholderText, headlineText, iconClass, type) {
+function createInputContainerWrapper(placeholderText, headlineText, iconClass, type, id) {
 
     const inputContainerWrapper = document.createElement("div");
     inputContainerWrapper.classList.add("input-container-wrapper");
@@ -73,37 +73,49 @@ function createInputContainerWrapper(placeholderText, headlineText, iconClass, t
     input.classList.add("input-wrapper");
     input.placeholder = placeholderText;
     input.type = type;
-    input.id = "input-inside-input-wrapper";
+    input.id = id;
 
-    const icon = document.createElement("i");
-    icon.classList.add("fas", iconClass);
+    const inputIcon = document.createElement("i");
+    inputIcon.classList.add("fas", iconClass);
 
     inputContainerWrapper.appendChild(inputHeadline);
     inputContainerWrapper.appendChild(inputWrapper);
     
     inputWrapper.appendChild(input);
-    inputWrapper.appendChild(icon);
+    inputWrapper.appendChild(inputIcon);
 
     return inputContainerWrapper;
 }   
 
-function passButtonProperties(classList, id, textContent) {
-    const passButtonProperties = document.createElement("button");
-    passButtonProperties.classList.add(classList);
-    passButtonProperties.id = id;
-    passButtonProperties.textContent = textContent;
+function createToggleButton(classList, id, textContent, iconClass) {
+    const toggleButton = document.createElement("button");
+    toggleButton.classList.add(classList);
+    toggleButton.id = id;
+    toggleButton.textContent = textContent;
+    
+    const buttonIcon = document.createElement("i");
+    buttonIcon.classList.add("fas", iconClass);
+    toggleButton.appendChild(buttonIcon);
 
-    return passButtonProperties;
+    return toggleButton;
 }
 
 function handleToggle(event) {
-    const button = event.target;
+    var button = null;
+    if (event.target.classList.contains("fas")) {
+        button = event.target.offsetParent;
+    } else {
+        button = event.target;
+    }
     button.classList.toggle("active");
+
+    const icon = button.querySelector("i");
 
     if(button.classList.contains("active")) {
         switch(button.id) {
             case "toggle-username-container-button":
                 UsernameContainer.style.display = "none";
+                
                 break;
 
             case "toggle-email-container-button":
@@ -111,7 +123,11 @@ function handleToggle(event) {
                 break;
 
             case "toggle-show-password-button":
-                document.getElementById("input-inside-input-wrapper").type = "text";
+                document.getElementById("password-input-id").type = "text";
+                if (icon) {
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                }
                 break;
             default:
                 break;
@@ -129,13 +145,16 @@ function handleToggle(event) {
                 break;
 
             case "toggle-show-password-button":
-                document.getElementById("input-inside-input-wrapper").type = "password";
+                document.getElementById("password-input-id").type = "password";
+                if (icon) {
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                }
                 break;
 
             default:
                 break;
         }
-
     }
 }
 
