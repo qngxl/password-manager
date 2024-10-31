@@ -170,4 +170,5 @@ input:hover {
 
 body {
     background-color: var(--primary-color);
+    font-family: 'Satoshi', sans-serif;
 }
