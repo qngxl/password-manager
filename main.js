@@ -1,58 +1,72 @@
 var newPasswordContainer = null;
 var inputWrapper = null;
-var UsernameContainer = null;
-var EmailContainer = null;
-var PasswordContainer = null;
+var usernameContainer = null;
+var emailContainer = null;
+var passwordContainer = null;
+var inputId = 0;
+
 
 function createNewPasswordContainerOnClick() {
 
-    if(!document.querySelector(".container.new-password-container")) {
+    if (!document.querySelector(".container.new-password-container")) {
 
-    newPasswordContainer = document.createElement("div");
-    newPasswordContainer.classList.add("container", "new-password-container");
+        newPasswordContainer = document.createElement("div");
+        newPasswordContainer.classList.add("container", "new-password-container");
 
-    const closeButton = document.createElement("button");
-    closeButton.classList.add("close-button");
-    closeButton.textContent = "x";
-    closeButton.addEventListener("click", () => {
-        newPasswordContainer.remove();
-    });
+        const closeButton = document.createElement("button");
+        closeButton.classList.add("close-button");
+        closeButton.textContent = "x";
+        closeButton.addEventListener("click", () => {
+            newPasswordContainer.remove();
+        });
 
-    newPasswordContainer.appendChild(closeButton);
+        const usernameMapper = createInputContainerWrapper("Username", "Username", "fa-user", "", "username-input-id");
+        usernameContainer = usernameMapper.wrapper;
+        const usernameInput = usernameMapper.input;
 
-    UsernameContainer = createInputContainerWrapper("Username", "Username", "fa-user", "", "username-input-id");
-    EmailContainer = createInputContainerWrapper("Email", "Email", "fa-envelope", "", "email-input-id");
-    PasswordContainer = createInputContainerWrapper("Password", "Password", "fa-key", "password", "password-input-id");
+        const emailMapper = createInputContainerWrapper("Email", "Email", "fa-envelope", "", "email-input-id");
+        emailContainer = emailMapper.wrapper;
+        const emailInput = emailMapper.input;
 
-    newPasswordContainer.appendChild(UsernameContainer);
-    newPasswordContainer.appendChild(EmailContainer);
-    newPasswordContainer.appendChild(PasswordContainer);
 
-    const saveButton = document.createElement("button");
-    saveButton.classList.add("save-button");
-    saveButton.textContent = "Save";        
-    saveButton.addEventListener("click", () => {
-        newPasswordContainer.remove();
-    });
+        const passwordMapper = createInputContainerWrapper("Password", "Password", "fa-key", "password", "password-input-id");
+        passwordContainer = passwordMapper.wrapper;
+        const passwordInput = passwordMapper.input;
 
-    newPasswordContainer.appendChild(saveButton);
+        const saveButton = document.createElement("button");
+        saveButton.classList.add("save-button");
+        saveButton.textContent = "Save";
+        saveButton.addEventListener("click", () => {
+            newPasswordContainer.remove();
+            createCredentialsContainer(usernameInput.value, emailInput.value, passwordInput.value);
+        });
 
-    document.body.appendChild(newPasswordContainer);
+        const toggleUsernameContainerButton = createToggleButton("toggle-username-container-button", "toggle-username-container-button-id", "toggle Username Container: ON",);
 
-    const toggleUsernameContainerButton = createToggleButton("toggle-username-container-button", "toggle-username-container-button", "toggle Username Container: ON", );
-    newPasswordContainer.appendChild(toggleUsernameContainerButton);
+        toggleUsernameContainerButton.addEventListener("click", handleToggle);
 
-    toggleUsernameContainerButton.addEventListener("click", handleToggle);
+        const toggleEmailContainerButton = createToggleButton("toggle-email-container-button", "toggle-email-container-button-id", "toggle Email Container: ON",);
 
-    const toggleEmailContainerButton = createToggleButton("toggle-email-container-button", "toggle-email-container-button", "toggle Email Container: ON", );
-    newPasswordContainer.appendChild(toggleEmailContainerButton);
+        toggleEmailContainerButton.addEventListener("click", handleToggle);
 
-    toggleEmailContainerButton.addEventListener("click", handleToggle);
+        const toggleShowPasswordButton = createToggleButton("toggle-show-password-button", "toggle-show-password-button-id", "", "fa-eye-slash");
 
-    const toggleShowPasswordButton = createToggleButton("toggle-show-password-button", "toggle-show-password-button", "", "fa-eye-slash");
-    inputWrapper.appendChild(toggleShowPasswordButton);
+        toggleShowPasswordButton.addEventListener("click", handleToggle);
 
-    toggleShowPasswordButton.addEventListener("click", handleToggle);
+        newPasswordContainer.appendChild(closeButton);
+
+        newPasswordContainer.appendChild(usernameContainer);
+        newPasswordContainer.appendChild(emailContainer);
+        newPasswordContainer.appendChild(passwordContainer);
+
+        newPasswordContainer.appendChild(saveButton);
+
+        newPasswordContainer.appendChild(toggleUsernameContainerButton);
+        newPasswordContainer.appendChild(toggleEmailContainerButton);
+        inputWrapper.appendChild(toggleShowPasswordButton);
+
+        document.body.appendChild(newPasswordContainer);
+
     }
 
 }
@@ -80,71 +94,115 @@ function createInputContainerWrapper(placeholderText, headlineText, iconClass, t
 
     inputContainerWrapper.appendChild(inputHeadline);
     inputContainerWrapper.appendChild(inputWrapper);
-    
+
     inputWrapper.appendChild(input);
     inputWrapper.appendChild(inputIcon);
 
-    return inputContainerWrapper;
-}   
+    return {
+        wrapper: inputContainerWrapper,
+        input: input
+    };
+}
 
 function createToggleButton(classList, id, textContent, iconClass) {
     const toggleButton = document.createElement("button");
-    toggleButton.classList.add(classList);
+    toggleButton.classList.add(classList.split("_")[0]);
     toggleButton.id = id;
     toggleButton.textContent = textContent;
-    
+
     const buttonIcon = document.createElement("i");
     buttonIcon.classList.add("fas", iconClass);
+
     toggleButton.appendChild(buttonIcon);
 
     return toggleButton;
 }
 
 function handleToggle(event) {
-    var button = null;
-    if (event.target.classList.contains("fas")) {
-        button = event.target.offsetParent;
-    } else {
-        button = event.target;
-    }
+    const button = event.currentTarget;
     button.classList.toggle("active");
-
     const icon = button.querySelector("i");
+    const extractId = button.id.split("_")[1];
 
-    if(button.classList.contains("active")) {
-        switch(button.id) {
-            case "toggle-username-container-button":
-                UsernameContainer.style.display = "none";
-                
+    if (button.classList.contains("active")) {
+        switch (button.id) {
+            case "toggle-username-container-button-id":
+
+                usernameContainer.style.display = "none";
+
                 break;
 
-            case "toggle-email-container-button":
-                EmailContainer.style.display = "none";
+            case "toggle-email-container-button-id":
+
+                emailContainer.style.display = "none";
                 break;
 
-            case "toggle-show-password-button":
+            case "toggle-show-password-button-id":
+
                 document.getElementById("password-input-id").type = "text";
                 if (icon) {
                     icon.classList.remove("fa-eye-slash");
                     icon.classList.add("fa-eye");
                 }
                 break;
+
+            case "toggle-show-password-button-small-id_" + extractId:
+
+                document.getElementById("credential-password-input-id_" + extractId).type = "text";
+                if (icon) {
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                }
+                break;
+
+            case "edit-credentials-button-id_" + extractId:
+
+                document.getElementById("credential-username-input-id_" + extractId).readOnly = false;
+                document.getElementById("credential-email-input-id_" + extractId).readOnly = false;
+                document.getElementById("credential-password-input-id_" + extractId).readOnly = false;
+
+                document.getElementById("credential-username-input-id_" + extractId).focus();
+
+                document.getElementById("credential-username-input-id_" + extractId).addEventListener("keydown", (event) => {
+                    if (event.key === "Enter") {
+                        document.getElementById("credential-email-input-id_" + extractId).focus();
+                        event.preventDefault();
+                    }
+                })
+                document.getElementById("credential-email-input-id_" + extractId).addEventListener("keydown", (event) => {
+                    if (event.key === "Enter") {
+                        document.getElementById("credential-password-input-id_" + extractId).focus();
+                        event.preventDefault();
+                    }
+                })
+                document.getElementById("credential-password-input-id_" + extractId).addEventListener("keydown", (event) => {
+                    if (event.key === "Enter") {
+                        document.getElementById("credential-username-input-id_" + extractId).readOnly = true;
+                        document.getElementById("credential-email-input-id_" + extractId).readOnly = true;
+                        document.getElementById("credential-password-input-id_" + extractId).readOnly = true;
+                        button.classList.remove("active");
+                    }
+                })
+
             default:
                 break;
         }
     }
 
     else {
-        switch(button.id) {
-            case "toggle-username-container-button":
-                UsernameContainer.style.display = "block";
+        switch (button.id) {
+            case "toggle-username-container-button-id":
+                
+                usernameContainer.style.display = "block";
                 break;
 
-            case "toggle-email-container-button":
-            	EmailContainer.style.display = "block";
+            case "toggle-email-container-button-id":
+
+                emailContainer.style.display = "block";
                 break;
 
-            case "toggle-show-password-button":
+            case "toggle-show-password-button-id":
+
                 document.getElementById("password-input-id").type = "password";
                 if (icon) {
                     icon.classList.remove("fa-eye");
@@ -152,10 +210,110 @@ function handleToggle(event) {
                 }
                 break;
 
+            case "toggle-show-password-button-small-id_" + extractId:
+
+                document.getElementById("credential-password-input-id_" + extractId).type = "password";
+                if (icon) {
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                }
+                break;
+
+            case "edit-credentials-button-id_" + extractId:
+
+                document.getElementById("credential-username-input-id_" + extractId).readOnly = true;
+                document.getElementById("credential-email-input-id_" + extractId).readOnly = true;
+                document.getElementById("credential-password-input-id_" + extractId).readOnly = true;
+
             default:
                 break;
         }
     }
 }
 
+function createCredentialsContainer(usernameInputValue, emailInputValue, passwordInputValue) {
+
+    const mainContainer = document.getElementById("main-container-id");
+
+    const credentialsContainer = document.createElement("div");
+    credentialsContainer.classList.add("container", "credentials-container");
+
+
+    const credentialUsernameContainer = createCredentialContainer("fa-user", "Username: ", usernameInputValue, "username");
+    const credentialEmailContainer = createCredentialContainer("fa-envelope", "Email: ", emailInputValue, "email");
+    const credentialPasswordContainer = createCredentialPasswordContainer(passwordInputValue);
+
+    const editCredentialsButton = createToggleButton(`edit-credentials-button_${inputId + 1}`, `edit-credentials-button-id_${inputId}`, "", "fa-pencil");
+
+    editCredentialsButton.addEventListener("click", handleToggle);
+
+    credentialsContainer.appendChild(credentialUsernameContainer);
+    credentialsContainer.appendChild(credentialEmailContainer);
+    credentialsContainer.appendChild(credentialPasswordContainer);
+    credentialsContainer.appendChild(editCredentialsButton);
+
+    mainContainer.appendChild(credentialsContainer);
+}
+
+function createCredentialContainer(iconClass, text, inputValue, idName) {
+
+    const credentialContainer = document.createElement("div");
+    credentialContainer.classList.add("credential-container");
+
+    const credentialIcon = document.createElement("i");
+    credentialIcon.classList.add("fas", iconClass);
+
+    const credentialText = document.createElement("div")
+    credentialText.textContent = text;
+    credentialText.style.paddingLeft = "10px";
+    credentialText.style.paddingRight = "10px";
+
+    const credentialInput = document.createElement("input");
+    credentialInput.classList.add("credential-container");
+    credentialInput.value = inputValue;
+    credentialInput.readOnly = true;
+    credentialInput.id = `credential-${idName}-input-id_${inputId + 1}`;
+
+    credentialContainer.appendChild(credentialIcon);
+    credentialContainer.appendChild(credentialText);
+    credentialContainer.appendChild(credentialInput);
+
+    return credentialContainer;
+}
+
+function createCredentialPasswordContainer(inputValue) {
+
+    const credentialPasswordContainer = document.createElement("div");
+    credentialPasswordContainer.classList.add("credential-container");
+
+    const credentialPasswordIcon = document.createElement("i");
+    credentialPasswordIcon.classList.add("fas", "fa-key");
+
+    const credentialPasswordText = document.createElement("div");
+    credentialPasswordText.textContent = "Password: ";
+    credentialPasswordText.style.paddingLeft = "10px";
+    credentialPasswordText.style.paddingRight = "10px";
+
+    const credentialPasswordInput = document.createElement("input");
+    credentialPasswordInput.classList.add("credential-container");
+    credentialPasswordInput.type = "password";
+    credentialPasswordInput.value = inputValue;
+    credentialPasswordInput.readOnly = true;
+    credentialPasswordInput.id = `credential-password-input-id_${inputId + 1}`;
+
+    const credentialPasswordButton = createToggleButton(`toggle-show-password-button-small_${inputId + 1}`, `toggle-show-password-button-small-id_${inputId + 1}`, "", "fa-eye-slash");
+
+    credentialPasswordButton.addEventListener("click", handleToggle);
+
+    credentialPasswordContainer.appendChild(credentialPasswordIcon);
+    credentialPasswordContainer.appendChild(credentialPasswordText);
+    credentialPasswordContainer.appendChild(credentialPasswordInput);
+    credentialPasswordContainer.appendChild(credentialPasswordButton);
+    inputId++;
+
+    return credentialPasswordContainer;
+}
+
 document.getElementById("add-password-button").addEventListener("click", createNewPasswordContainerOnClick);
+
+document.querySelector(".main-container").classList.add("container"); 
