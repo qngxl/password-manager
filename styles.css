@@ -91,6 +91,10 @@ input:hover {
     border-radius: 7px;
 }
 
+.toggle-username-container-button i {
+    padding-left: 10px;
+}
+
 .toggle-email-container-button {
     width: 300px;
     height: 25px;
@@ -98,6 +102,10 @@ input:hover {
     top: 100px;
     border: 2px solid var(--third-grey);
     border-radius: 7px;
+}
+
+.toggle-email-container-button i {
+    padding-left: 10px;
 }
 
 .toggle-show-password-button {

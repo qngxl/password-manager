@@ -41,11 +41,11 @@ function createNewPasswordContainerOnClick() {
             createCredentialsContainer(usernameInput.value, emailInput.value, passwordInput.value);
         });
 
-        const toggleUsernameContainerButton = createToggleButton("toggle-username-container-button", "toggle-username-container-button-id", "toggle Username Container: ON",);
+        const toggleUsernameContainerButton = createToggleButton("toggle-username-container-button", "toggle-username-container-button-id", "Include Username?", "fa-check");
 
         toggleUsernameContainerButton.addEventListener("click", handleToggle);
 
-        const toggleEmailContainerButton = createToggleButton("toggle-email-container-button", "toggle-email-container-button-id", "toggle Email Container: ON",);
+        const toggleEmailContainerButton = createToggleButton("toggle-email-container-button", "toggle-email-container-button-id", "Include Email?", "fa-check");
 
         toggleEmailContainerButton.addEventListener("click", handleToggle);
 
@@ -129,12 +129,21 @@ function handleToggle(event) {
             case "toggle-username-container-button-id":
 
                 usernameContainer.style.display = "none";
+                if (icon) {
+                    icon.classList.remove("fa-check");
+                    icon.classList.add("fa-xmark");
+                }
 
                 break;
 
             case "toggle-email-container-button-id":
 
                 emailContainer.style.display = "none";
+                if (icon) {
+                    icon.classList.remove("fa-check");
+                    icon.classList.add("fa-xmark");
+                }
+                
                 break;
 
             case "toggle-show-password-button-id":
@@ -194,11 +203,21 @@ function handleToggle(event) {
             case "toggle-username-container-button-id":
                 
                 usernameContainer.style.display = "block";
+                if (icon) {
+                    icon.classList.remove("fa-xmark");
+                    icon.classList.add("fa-check");
+                }
+
                 break;
 
             case "toggle-email-container-button-id":
 
                 emailContainer.style.display = "block";
+                if (icon) {
+                    icon.classList.remove("fa-xmark");
+                    icon.classList.add("fa-check");
+                }
+
                 break;
 
             case "toggle-show-password-button-id":
@@ -208,6 +227,7 @@ function handleToggle(event) {
                     icon.classList.remove("fa-eye");
                     icon.classList.add("fa-eye-slash");
                 }
+
                 break;
 
             case "toggle-show-password-button-small-id_" + extractId:
@@ -217,6 +237,7 @@ function handleToggle(event) {
                     icon.classList.remove("fa-eye");
                     icon.classList.add("fa-eye-slash");
                 }
+
                 break;
 
             case "edit-credentials-button-id_" + extractId:
